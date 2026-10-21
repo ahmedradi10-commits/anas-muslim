@@ -7,6 +7,9 @@ on:
       - main
       - master
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,7 +48,20 @@ jobs:
 
       - name: Build
         working-directory: android
-        run: gradle assembleDebug bundleDebug --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          gradle assembleDebug bundleDebug --no-daemon --stacktrace 2>&1 | tee /tmp/build.log
+
+      - name: Save failure log for debugging
+        if: failure()
+        run: |
+          mkdir -p ci-logs
+          tail -n 400 /tmp/build.log > ci-logs/last-failure.txt
+          git config user.email "ci@local"
+          git config user.name "CI"
+          git add ci-logs/last-failure.txt
+          git commit -m "ci: capture failure log [skip ci]"
+          git push origin HEAD:ci-logs --force
 
       - name: Collect outputs
         run: |
