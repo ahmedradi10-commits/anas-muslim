@@ -25,28 +25,9 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Restore signing key from secrets (optional)
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
-        working-directory: android
-        env:
-          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: |
-          echo "$KS_B64" | base64 -d > upload.jks
-          printf 'storeFile=../upload.jks\nstorePassword=%s\nkeyAlias=%s\nkeyPassword=%s\n' "$KS_PASS" "$KEY_ALIAS" "$KEY_PASS" > keystore.properties
-
       - name: Build
         working-directory: android
-        run: |
-          if [ -f keystore.properties ]; then
-            echo "Signing key found -> building signed release APK/AAB"
-            gradle assembleRelease bundleRelease --no-daemon
-          else
-            echo "No signing key configured -> building debug APK/AAB (installable, not for Play Store)"
-            gradle assembleDebug bundleDebug --no-daemon
-          fi
+        run: gradle assembleDebug bundleDebug --no-daemon
 
       - name: Collect outputs
         run: |
