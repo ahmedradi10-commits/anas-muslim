@@ -74,3 +74,18 @@ jobs:
         with:
           name: Anas-Muslim-Build
           path: dist/*
+
+      - name: Publish outputs to dist-output branch
+        run: |
+          set -e
+          git config user.email "ci@local"
+          git config user.name "CI"
+          git checkout --orphan dist-output-tmp
+          git rm -rf . > /dev/null 2>&1 || true
+          mkdir -p dist-keep
+          cp dist/*.apk dist/*.aab dist-keep/ 2>/dev/null || true
+          mv dist-keep/* . 2>/dev/null || true
+          rm -rf dist-keep dist android web
+          git add -A
+          git commit -m "ci: publish build outputs [skip ci]"
+          git push origin dist-output-tmp:dist-output --force
