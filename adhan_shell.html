@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>أنس مسلم</title>
+<style>
+@font-face{font-family:'Cairo';src:url(fonts/Cairo.woff) format('woff');font-weight:200 1000}
+@font-face{font-family:'Amiri';src:url(fonts/Amiri-Bold.woff) format('woff');font-weight:700}
+html,body{margin:0;height:100%;background:#050b1f;overflow:hidden}
+</style>
+</head>
+<body>
+<!--SCENE-->
+<script>
+/* Opened by AdhanActivity (Android) over the lock screen or the open phone while the adhan plays. */
+(function(){
+  var q=new URLSearchParams(location.search);
+  function close(){try{AndroidAdhan.closeScene()}catch(e){}}
+  Scene.show({
+    k:q.get('k')||'isha',name:q.get('n')||'',city:q.get('c')||'',time:q.get('tm')||'',preview:q.get('p')==='1',
+    file:q.get('f')||'',iq:parseInt(q.get('iq')||'0',10),
+    getPos:function(){try{return AndroidAdhan.position()/1000}catch(e){return -1}},
+    alertFn:function(){try{AndroidAdhan.alert()}catch(e){}},
+    onStop:function(){try{AndroidAdhan.stopAdhan()}catch(e){}close()},
+    onDone:close
+  });
+  window.sceneEnded=function(){Scene.ended()};
+})();
+</script>
+</body>
+</html>

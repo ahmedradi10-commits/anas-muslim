@@ -1,0 +1,45 @@
+<section class="view sk idle" id="v-ask" hidden>
+  <header class="skh">
+    <button class="skib" id="skMenu" aria-label="الأسئلة السابقة والإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <b class="skt" id="askTitle">اسأل الشيخ</b>
+    <button class="skib" id="askBack" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </header>
+  <div class="skmain" id="skMain">
+    <button type="button" class="skq" id="skQ" hidden><span id="skQt"></span></button>
+    <div class="skdots" id="skDots" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="alog" id="askLog" aria-live="polite"></div>
+  </div>
+  <div class="skfoot">
+    <button type="button" class="skav" id="skAv" aria-label="الشيخ"><span class="skpulse"></span><img id="skImg" alt="" src="__SHEIKH_CIRCLE__"></button>
+    <div class="skst" id="skSt"></div>
+    <div class="achips" id="askChips"></div>
+    <form class="askbar" id="askForm" autocomplete="off">
+      <button type="button" id="skMic" aria-label="تحدّث مع الشيخ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg></button>
+      <input id="askIn" type="text" placeholder="اكتب سؤالك الديني هنا" enterkeyhint="send" maxlength="200">
+      <button type="submit" id="askSend" aria-label="إرسال"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.4 20.4l17.8-8.4L3.4 3.6 3.3 10l12.7 2-12.7 2z"/></svg></button>
+    </form>
+  </div>
+  <div class="skdrw" id="skDrw" hidden>
+    <div class="skbd" id="skBd"></div>
+    <aside class="skpn">
+      <div class="sktabs"><button type="button" class="on" data-p="h">الأسئلة السابقة</button><button type="button" data-p="s">إعدادات الشيخ</button></div>
+      <div class="skpg" id="skPgH">
+        <div id="skHist"></div>
+        <button type="button" class="skclr" id="skClr">مسح السجل</button>
+      </div>
+      <div class="skpg" id="skPgS" hidden>
+        <label class="skf"><span>صوت الشيخ</span><select id="skVoice"></select></label>
+        <label class="skf"><span>درجة الصوت (عميق ↔ رفيع)</span><input type="range" id="skPitch" min="60" max="130" step="5"></label>
+        <label class="skf"><span>سرعة الكلام</span><input type="range" id="skRate" min="60" max="140" step="5"></label>
+        <label class="skf chk"><input type="checkbox" id="skAuto"><span>الشيخ يقرأ كل إجابة بصوته (حتى لو كتبت السؤال)</span></label>
+        <div class="skbtns"><button type="button" id="skTest">جرّب الصوت</button><button type="button" id="skTtsSet" hidden>تثبيت صوت عربي</button></div>
+        <p class="sknote">ملاحظة: التحدّث مع الشيخ (تحويل صوتك إلى كتابة) يحتاج إلى اتصال بالإنترنت. أما الكتابة والإجابات فتعمل بدون إنترنت. سيظهر هنا ما يتوفر من أصوات عربية على جهازك.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+<div class="wsheet" id="wsheet" hidden>
+  <div class="wh"><b class="wword" id="wsWord"></b><button id="wsClose" aria-label="إغلاق">×</button></div>
+  <div class="wb" id="wsBody"></div>
+</div>
+<div class="bgpop" id="bgPop" hidden></div>
