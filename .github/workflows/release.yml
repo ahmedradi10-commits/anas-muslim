@@ -1,62 +1,15 @@
-name: Build APK & AAB
+name: Build APK and AAB
 
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Build web assets
-        run: python3 build.py
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.9'
-
-      # Signing key is NOT stored in this repo. If you add the four secrets below
-      # (Settings -> Secrets and variables -> Actions), release builds are signed;
-      # otherwise this falls back to a normal installable debug build.
-      - name: Restore signing key from secrets (optional)
-        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
-        working-directory: android
-        run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > upload.jks
-          cat > keystore.properties << EOF
-          storeFile=../upload.jks
-          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
-          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
-          EOF
-
-      - name: Build
-        working-directory: android
-        run: |
-          if [ -f keystore.properties ]; then
-            echo "Signing key found -> building signed release APK/AAB"
-            gradle assembleRelease bundleRelease --no-daemon
-          else
-            echo "No signing key configured -> building debug APK/AAB (installable, not for Play Store)"
-            gradle assembleDebug bundleDebug --no-daemon
-          fi
-
-      - name: Collect outputs
-        run: |
-          mkdir -p dist
-          find android/app/build/outputs -name "*.apk" -exec cp {} dist/ \;
-          find android/app/build/outputs -name "*.aab" -exec cp {} dist/ \;
-          ls -la dist
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Anas-Muslim-Build
-          path: dist/*
+      - run: echo hello
