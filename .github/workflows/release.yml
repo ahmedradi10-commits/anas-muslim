@@ -21,13 +21,18 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      - uses: android-actions/setup-android@v3
+
+      - name: Install required SDK packages
+        run: sdkmanager --install "platforms;android-36" "build-tools;36.0.0"
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
       - name: Build
         working-directory: android
-        run: gradle assembleDebug bundleDebug --no-daemon
+        run: gradle assembleDebug bundleDebug --no-daemon --stacktrace
 
       - name: Collect outputs
         run: |
